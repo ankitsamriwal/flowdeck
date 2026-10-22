@@ -1,0 +1,46 @@
+{
+  "id": "llm-model-build",
+  "version": 1,
+  "name": "LLM model build",
+  "icon": "🧠",
+  "color": "#6a5acd",
+  "category": "AI / ML",
+  "desc": "Fine-tune or train a domain language model: scoping, data pipeline, training runs, evals and red-teaming, then a monitored rollout.",
+  "phases": [
+    { "name": "Scoping", "tasks": [
+      { "key": "usecases", "title": "Define use cases, users & success metrics", "days": 3, "priority": "High", "subtasks": ["Target tasks and examples", "Quality, latency and cost targets", "Out-of-scope behaviours"] },
+      { "key": "models", "title": "Shortlist base models & check licences", "days": 3, "after": ["usecases"] },
+      { "key": "evalplan", "title": "Design evaluation plan (offline + human)", "days": 4, "after": ["usecases"], "priority": "High" },
+      { "key": "m-scope", "title": "Scope signed off", "milestone": true, "after": ["models", "evalplan"] }
+    ]},
+    { "name": "Data", "tasks": [
+      { "key": "source", "title": "Source & license training data", "days": 8, "after": ["m-scope"], "priority": "High", "tags": ["data"] },
+      { "key": "scrub", "title": "PII scrubbing, safety filtering & de-duplication", "days": 5, "after": ["source"], "tags": ["data", "security"] },
+      { "key": "label", "title": "Labelling & instruction-tuning set", "days": 10, "after": ["source"], "tags": ["data"] },
+      { "key": "split", "title": "Train / val / test splits & data card", "days": 2, "after": ["scrub", "label"] },
+      { "key": "m-data", "title": "Data freeze", "milestone": true, "after": ["split"] }
+    ]},
+    { "name": "Training", "tasks": [
+      { "key": "infra", "title": "Provision GPU infra & experiment tracking", "days": 4, "after": ["m-scope"], "tags": ["infra"] },
+      { "key": "baseline", "title": "Baseline evals on candidate models", "days": 4, "after": ["m-data", "infra"] },
+      { "key": "sft", "title": "Supervised fine-tuning runs", "days": 10, "after": ["baseline"], "priority": "High" },
+      { "key": "pref", "title": "Preference tuning (DPO / RLHF)", "days": 8, "after": ["sft"] },
+      { "key": "select", "title": "Hyper-parameter & checkpoint selection", "days": 3, "after": ["pref"] },
+      { "key": "m-rc", "title": "Release-candidate checkpoint", "milestone": true, "after": ["select"] }
+    ]},
+    { "name": "Evaluation & safety", "tasks": [
+      { "key": "evals", "title": "Full eval suite & regression report", "days": 5, "after": ["m-rc"], "priority": "High" },
+      { "key": "redteam", "title": "Red-teaming: jailbreaks, prompt injection, harmful output", "days": 5, "after": ["m-rc"], "priority": "High", "tags": ["security"] },
+      { "key": "bias", "title": "Bias & fairness review", "days": 3, "after": ["m-rc"] },
+      { "key": "card", "title": "Model card & risk assessment", "days": 2, "after": ["evals", "redteam", "bias"] },
+      { "key": "m-gonogo", "title": "Go / no-go review", "milestone": true, "after": ["card"] }
+    ]},
+    { "name": "Deploy & operate", "tasks": [
+      { "key": "serve", "title": "Serving stack, quantisation & latency tests", "days": 5, "after": ["m-gonogo"], "tags": ["infra"] },
+      { "key": "guard", "title": "Guardrails, logging & monitoring", "days": 4, "after": ["m-gonogo"], "tags": ["security"] },
+      { "key": "canary", "title": "Canary rollout to pilot users", "days": 5, "after": ["serve", "guard"] },
+      { "key": "m-ga", "title": "General availability", "milestone": true, "after": ["canary"] },
+      { "key": "drift", "title": "Drift monitoring & retraining cadence", "days": 3, "after": ["m-ga"] }
+    ]}
+  ]
+}

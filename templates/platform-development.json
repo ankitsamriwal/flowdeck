@@ -1,0 +1,43 @@
+{
+  "id": "platform-development",
+  "version": 1,
+  "name": "Platform development",
+  "icon": "🏗️",
+  "color": "#4f7a6a",
+  "category": "Engineering",
+  "desc": "Deliver a web platform end to end: discovery, cloud foundations, three build sprints, SIT/UAT and VAPT, go-live and hypercare.",
+  "phases": [
+    { "name": "Discovery", "tasks": [
+      { "key": "stake", "title": "Stakeholder interviews & current-state review", "days": 5 },
+      { "key": "reqs", "title": "Requirements & NFRs (scale, security, compliance)", "days": 5, "after": ["stake"], "priority": "High" },
+      { "key": "arch", "title": "Solution architecture & ADRs", "days": 5, "after": ["reqs"], "priority": "High" },
+      { "key": "m-disc", "title": "Discovery sign-off", "milestone": true, "after": ["arch"] }
+    ]},
+    { "name": "Foundations", "tasks": [
+      { "key": "landing", "title": "Cloud landing zone & infrastructure as code", "days": 6, "after": ["m-disc"], "tags": ["infra"] },
+      { "key": "cicd", "title": "CI/CD pipelines & environments", "days": 4, "after": ["landing"] },
+      { "key": "iam", "title": "Identity, SSO & role-based access", "days": 5, "after": ["landing"], "tags": ["security"] },
+      { "key": "obs", "title": "Observability baseline (logs, metrics, alerts)", "days": 3, "after": ["cicd"] },
+      { "key": "m-found", "title": "Foundations ready", "milestone": true, "after": ["iam", "obs"] }
+    ]},
+    { "name": "Build", "tasks": [
+      { "key": "s1", "title": "Sprint 1 — core domain & APIs", "days": 10, "after": ["m-found"], "priority": "High" },
+      { "key": "s2", "title": "Sprint 2 — portal & workflows", "days": 10, "after": ["s1"] },
+      { "key": "s3", "title": "Sprint 3 — integrations & notifications", "days": 10, "after": ["s2"] },
+      { "key": "migr", "title": "Data migration scripts & dry runs", "days": 8, "after": ["s1"], "tags": ["data"] },
+      { "key": "m-fc", "title": "Feature complete", "milestone": true, "after": ["s3", "migr"] }
+    ]},
+    { "name": "Quality", "tasks": [
+      { "key": "sit", "title": "System integration testing", "days": 6, "after": ["m-fc"] },
+      { "key": "vapt", "title": "Performance & security testing (VAPT)", "days": 5, "after": ["m-fc"], "priority": "High", "tags": ["security"] },
+      { "key": "uat", "title": "User acceptance testing", "days": 8, "after": ["sit"] },
+      { "key": "m-uat", "title": "UAT sign-off", "milestone": true, "after": ["uat", "vapt"] }
+    ]},
+    { "name": "Launch", "tasks": [
+      { "key": "train", "title": "Training, runbooks & support handover", "days": 4, "after": ["sit"] },
+      { "key": "cutover", "title": "Cutover rehearsal & go/no-go", "days": 2, "after": ["m-uat", "train"] },
+      { "key": "m-live", "title": "Go-live", "milestone": true, "after": ["cutover"] },
+      { "key": "hyper", "title": "Hypercare", "days": 15, "after": ["m-live"] }
+    ]}
+  ]
+}

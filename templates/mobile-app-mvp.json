@@ -1,0 +1,36 @@
+{
+  "id": "mobile-app-mvp",
+  "version": 1,
+  "name": "Mobile app MVP",
+  "icon": "📱",
+  "color": "#ee6c2b",
+  "category": "Product",
+  "desc": "Take a consumer app from problem interviews to store launch: PRD, design, build with payments and analytics, closed beta and launch review.",
+  "phases": [
+    { "name": "Discover", "tasks": [
+      { "key": "interviews", "title": "Problem interviews (10 target users)", "days": 5, "priority": "High" },
+      { "key": "teardown", "title": "Competitor teardown", "days": 2, "after": [] },
+      { "key": "prd", "title": "PRD & success metrics", "days": 3, "after": ["interviews", "teardown"], "priority": "High" },
+      { "key": "m-prd", "title": "PRD approved", "milestone": true, "after": ["prd"] }
+    ]},
+    { "name": "Design", "tasks": [
+      { "key": "flows", "title": "User flows & wireframes", "days": 4, "after": ["m-prd"] },
+      { "key": "ui", "title": "UI design & design system", "days": 5, "after": ["flows"] },
+      { "key": "proto", "title": "Clickable prototype tests with 5 users", "days": 3, "after": ["ui"] },
+      { "key": "m-design", "title": "Design sign-off", "milestone": true, "after": ["proto"] }
+    ]},
+    { "name": "Build", "tasks": [
+      { "key": "skeleton", "title": "Repo, CI & app skeleton", "days": 2, "after": ["m-prd"] },
+      { "key": "backend", "title": "Backend, auth & data model", "days": 8, "after": ["skeleton"], "tags": ["security"] },
+      { "key": "features", "title": "Core features", "days": 12, "after": ["m-design", "backend"], "priority": "High" },
+      { "key": "analytics", "title": "Analytics & crash reporting", "days": 2, "after": ["features"] },
+      { "key": "payments", "title": "Payments / subscriptions", "days": 4, "after": ["features"] }
+    ]},
+    { "name": "Launch", "tasks": [
+      { "key": "beta", "title": "Closed beta (TestFlight / Play internal testing)", "days": 7, "after": ["analytics", "payments"] },
+      { "key": "store", "title": "Store listings, privacy labels & review", "days": 4, "after": ["beta"] },
+      { "key": "m-launch", "title": "Public launch", "milestone": true, "after": ["store"] },
+      { "key": "review", "title": "Post-launch metrics review", "days": 3, "after": ["m-launch"] }
+    ]}
+  ]
+}
