@@ -44,7 +44,7 @@ A fast, private, local-first project manager. One HTML file, one script, one sty
 
 ## Data & privacy
 
-Everything lives in your browser's `localStorage` (`flowdeck.v2`). Data from v1 (`flowdeck.v1`) is migrated automatically on first load. Export/Import JSON from **Projects → settings**. Imported data and templates are validated and sanitised, CSV exports neutralise spreadsheet formulas, (colours, lengths, enums) before use, all text is HTML-escaped on render, and a strict Content-Security-Policy blocks inline/third-party scripts.
+Everything lives in your browser's `localStorage` (`flowdeck.v2`). Data from v1 (`flowdeck.v1`) is migrated automatically on first load. Export/Import JSON from **Projects → settings**. Imported data and templates are validated and sanitised (colours, lengths, enums) before use, CSV exports neutralise spreadsheet formulas, all text is HTML-escaped on render, and a strict Content-Security-Policy blocks inline/third-party scripts.
 
 Clearing site data erases your projects — export regularly.
 
