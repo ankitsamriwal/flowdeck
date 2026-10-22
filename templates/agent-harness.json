@@ -1,0 +1,41 @@
+{
+  "id": "agent-harness",
+  "version": 1,
+  "name": "Agent harness development",
+  "icon": "🛠️",
+  "color": "#2f6fb3",
+  "category": "AI / Agents",
+  "desc": "Build an agent runtime: model-agnostic loop, typed tools, sandboxing and approvals, eval gates in CI, hardening and a staged rollout.",
+  "phases": [
+    { "name": "Foundations", "tasks": [
+      { "key": "reqs", "title": "Agent use cases, autonomy levels & guardrail policy", "days": 3, "priority": "High" },
+      { "key": "arch", "title": "Harness architecture: loop, tools, memory, sandbox", "days": 4, "after": ["reqs"], "priority": "High" },
+      { "key": "threat", "title": "Threat model: prompt injection, tool abuse, data exfiltration", "days": 3, "after": ["arch"], "priority": "High", "tags": ["security"] },
+      { "key": "m-arch", "title": "Architecture approved", "milestone": true, "after": ["threat"] }
+    ]},
+    { "name": "Core runtime", "tasks": [
+      { "key": "loop", "title": "Agent loop with model abstraction (bring-your-own-model)", "days": 6, "after": ["m-arch"], "priority": "High" },
+      { "key": "tools", "title": "Tool registry with typed schemas & validation", "days": 5, "after": ["m-arch"] },
+      { "key": "sandbox", "title": "Sandboxed execution & secrets isolation", "days": 5, "after": ["m-arch"], "tags": ["security"] },
+      { "key": "memory", "title": "Context window & memory management", "days": 5, "after": ["loop"] },
+      { "key": "approvals", "title": "Permission & human-approval layer", "days": 4, "after": ["tools", "sandbox"], "tags": ["security"] }
+    ]},
+    { "name": "Evals & observability", "tasks": [
+      { "key": "evalset", "title": "Task eval suite & golden traces", "days": 6, "after": ["m-arch"], "priority": "High" },
+      { "key": "tracing", "title": "Tracing, cost & token telemetry", "days": 4, "after": ["loop"] },
+      { "key": "ci", "title": "CI eval gates & regression dashboard", "days": 3, "after": ["evalset", "tracing"] },
+      { "key": "m-alpha", "title": "Harness alpha", "milestone": true, "after": ["memory", "approvals", "ci"] }
+    ]},
+    { "name": "Hardening", "tasks": [
+      { "key": "inject", "title": "Prompt-injection & red-team test pack", "days": 5, "after": ["m-alpha"], "priority": "High", "tags": ["security"] },
+      { "key": "perf", "title": "Load, latency & failure-mode testing", "days": 4, "after": ["m-alpha"] },
+      { "key": "docs", "title": "Developer docs & SDK examples", "days": 4, "after": ["m-alpha"] },
+      { "key": "m-beta", "title": "Harness beta", "milestone": true, "after": ["inject", "perf", "docs"] }
+    ]},
+    { "name": "Rollout", "tasks": [
+      { "key": "pilot", "title": "Pilot with two internal teams", "days": 8, "after": ["m-beta"] },
+      { "key": "triage", "title": "Feedback triage & fixes", "days": 4, "after": ["pilot"] },
+      { "key": "m-ga", "title": "General availability", "milestone": true, "after": ["triage"] }
+    ]}
+  ]
+}

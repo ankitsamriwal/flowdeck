@@ -1,0 +1,46 @@
+{
+  "id": "d365-erp-implementation",
+  "version": 1,
+  "name": "D365 ERP implementation",
+  "icon": "🏢",
+  "color": "#2a2926",
+  "category": "Business applications",
+  "desc": "Dynamics 365 Business Central / F&O rollout: mobilise, fit-gap and design, configure and extend, two data-migration mocks, SIT/UAT, cutover and hypercare.",
+  "phases": [
+    { "name": "Mobilise", "tasks": [
+      { "key": "kickoff", "title": "Project kickoff & governance setup", "days": 2, "priority": "High" },
+      { "key": "charter", "title": "Project charter, RACI & RAID log", "days": 3, "after": ["kickoff"] },
+      { "key": "envs", "title": "Environment provisioning (sandbox / production)", "days": 3, "after": ["kickoff"], "tags": ["infra"] },
+      { "key": "m-mob", "title": "Mobilisation complete", "milestone": true, "after": ["charter", "envs"] }
+    ]},
+    { "name": "Analysis & design", "tasks": [
+      { "key": "fitgap", "title": "Process workshops & fit-gap (O2C, P2P, R2R, inventory)", "days": 12, "after": ["m-mob"], "priority": "High" },
+      { "key": "brd", "title": "Business requirements document", "days": 5, "after": ["fitgap"] },
+      { "key": "sdd", "title": "Solution design & integration specs", "days": 6, "after": ["brd"], "priority": "High" },
+      { "key": "dmstrat", "title": "Data migration strategy & templates", "days": 3, "after": ["fitgap"], "tags": ["data"] },
+      { "key": "m-design", "title": "Design sign-off", "milestone": true, "after": ["sdd", "dmstrat"] }
+    ]},
+    { "name": "Build", "tasks": [
+      { "key": "config", "title": "Core configuration, master data & UAE VAT / e-invoicing setup", "days": 10, "after": ["m-design"], "priority": "High" },
+      { "key": "ext", "title": "Extensions & customisations", "days": 15, "after": ["m-design"] },
+      { "key": "integ", "title": "Integrations (banks, e-invoicing, 3PL)", "days": 12, "after": ["m-design"] },
+      { "key": "reports", "title": "Reports & Power BI dashboards", "days": 8, "after": ["config"] },
+      { "key": "mock1", "title": "Data migration — mock 1", "days": 5, "after": ["config"], "tags": ["data"] },
+      { "key": "m-build", "title": "Build complete", "milestone": true, "after": ["ext", "integ", "reports", "mock1"] }
+    ]},
+    { "name": "Test", "tasks": [
+      { "key": "sit", "title": "System integration testing", "days": 8, "after": ["m-build"] },
+      { "key": "sod", "title": "Security roles & segregation-of-duties review", "days": 4, "after": ["m-build"], "tags": ["security"] },
+      { "key": "mock2", "title": "Data migration — mock 2 & reconciliation", "days": 4, "after": ["m-build"], "tags": ["data"] },
+      { "key": "uat", "title": "User acceptance testing", "days": 10, "after": ["sit", "mock2"], "priority": "High" },
+      { "key": "m-uat", "title": "UAT sign-off", "milestone": true, "after": ["uat", "sod"] }
+    ]},
+    { "name": "Deploy", "tasks": [
+      { "key": "train", "title": "End-user training (train-the-trainer)", "days": 5, "after": ["m-uat"] },
+      { "key": "cutover", "title": "Cutover & final data load", "days": 3, "after": ["train"], "priority": "High" },
+      { "key": "m-live", "title": "Go-live", "milestone": true, "after": ["cutover"] },
+      { "key": "hyper", "title": "Hypercare & first month-end close", "days": 20, "after": ["m-live"] },
+      { "key": "m-close", "title": "Project closure", "milestone": true, "after": ["hyper"] }
+    ]}
+  ]
+}
